@@ -30,7 +30,7 @@ jobs:
           sudo apt-get install -y lcov
       - name: run lcov
         run: | 
-          lcov --capture --directory build/CMakeFiles/banking.dir/banking/Transaction.cpp --output-file lcov.info
+          lcov --capture --directory .. --output-file lcov.info
           lcov --remove lcov.info '/usr/banking/*' -o lcov.info
           lcov --remove lcov.info '/home/runner/work/lab05/lab05/third-party/gtest/*' -o lcov.info
       - name: coveralls
