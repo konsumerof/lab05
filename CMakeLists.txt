@@ -8,7 +8,8 @@ project(lab05)
 include_directories(banking)
 add_subdirectory(banking banking)
 
-option(BUILD_TESTS "Build tests" OFF)
+option(BUILD_TESTS "Build tests" ON)
+option(COVERAGE "Coverage" ON)
 
 if(BUILD_TESTS)
  enable_testing()
