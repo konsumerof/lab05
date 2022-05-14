@@ -34,7 +34,8 @@ jobs:
       - name: run lcov
         run: | 
           lcov --zerocounters --directory home/runner/work/lab05/lab05/output/CMakeFiles/banking.dir/banking
-          lcov --capture --initial --directory home/runner/work/lab05/lab05/output/CMakeFiles/banking.dir/banking --output-file myOutputFile
+          lcov --capture --initial --directory home/runner/work/lab05/lab05/output/CMakeFiles/banking.dir/banking --output-file ./lcov_filtered.info
+          lcov --no-checksum --directory myFullPath --capture --output-file ./lcov_filtered.info
           lcov --remove ./lcov.info '/home/runner/work/tp-lab05/tp-lab05/third-party/gtest/*' -o ./lcov_filtered.info
       - name: coveralls
         uses: coverallsapp/github-action@v1.1.2
