@@ -33,9 +33,9 @@ jobs:
           sudo apt-get install -y lcov
       - name: run lcov
         run: | 
-          lcov --zerocounters --directory home/runner/work/lab05/lab05/output/CMakeFiles/check.dir/tests
-          lcov --capture --initial --directory home/runner/work/lab05/lab05/output/CMakeFiles/check.dir/tests --output-file ./lcov_filtered.info
-          lcov --no-checksum --directory hhome/runner/work/lab05/lab05/output/CMakeFiles/check.dir/tests --capture --output-file ./lcov_filtered.info
+          lcov --zerocounters --directory output/CMakeFiles/check.dir/tests
+          lcov --capture --initial --directory output/CMakeFiles/check.dir/tests --output-file ./lcov_filtered.info
+          lcov --no-checksum --directory output/CMakeFiles/check.dir/tests --capture --output-file ./lcov_filtered.info
           lcov --remove ./lcov.info '/home/runner/work/tp-lab05/tp-lab05/third-party/gtest/*' -o ./lcov_filtered.info
       - name: coveralls
         uses: coverallsapp/github-action@v1.1.2
