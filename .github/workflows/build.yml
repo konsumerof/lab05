@@ -25,7 +25,7 @@ jobs:
           git submodule update --init --recursive
           cmake -B ./output
           make
-          ./tests
+          ./tests/tests.cpp
       - name: install lcov
         run: |
           sudo pip install --user cpp-coveralls
