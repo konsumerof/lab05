@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.4)
 
 set(CMAKE_CXX_STANDART 11)
 set(CMAKE_CXX_STANDART _REQUIRED ON)
+set(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_FLAGS "-fprofile-arcs -ftest-coverage")
 
 project(lab05)
 
