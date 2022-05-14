@@ -2,7 +2,55 @@
 
 ## Отчёт
 
-1. 
+1. Создал  CMakeLists для библиотеки banking, включив туда тесты, субдиректорию с CMake для программ Transaction.cpp  и Account.cpp
+2. Написал тесты используя mock-объекты и подключив gtest(предварительно подключив их в CMake)
+3. В Github Actions написал checkout и скомпилировал файл
+```sh
+   - name: checkout
+     uses: actions/checkout@v1
+   - name: build
+     run: |
+      git submodule update --init --recursive
+      cmake -B ./output
+      cd output
+      make
+      cd ..
+```
+4. Включил в CMake флаги -fprofile-arcs -ftest-coverage, чтобы при компиляции создавался .gcda файл
+5. После в Github Actions дописал проверку тестов с исполнением бинарного файла, чтобы появлялся .gcda для работы lcov
+```sh
+      - name: test
+        shell: bash
+        run: |
+          git submodule update --init --recursive
+          cmake -B ./output
+          cd output
+          make
+          ./check
+```
+6. Подключил в GitHub Actions lcov, чтобы собрать в файл информации по покрытию кода
+```sh
+      - name: install lcov
+        run: |
+          sudo pip install --user cpp-coveralls
+          sudo apt-get install -y lcov
+      - name: run lcov
+        run: | 
+          lcov --capture --directory output/CMakeFiles/check.dir/tests --output-file lcov.info
+          lcov --remove lcov.info '/usr/include/*' -o lcov.info
+          lcov --remove lcov.info '/home/runner/work/lab05/lab05/third-party/gtest/*' -o lcov.info
+```
+7. Подключил репозиторий на гитхабе к coveralls.io
+8. Добавил в GitHub Actions отправку данных в coveralls
+```sh
+      - name: coveralls
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          path-to-lcov: "./lcov.info"
+          github-token: ${{ secrets.github_token }}
+```
+9. Добавил в Readme.md бейдж с результатами покрытия
+
 
 ## Laboratory work V
 
