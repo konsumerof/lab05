@@ -26,7 +26,6 @@ jobs:
           cmake -B ./output
           cd output
           make
-          ./tests
       - name: install lcov
         run: |
           sudo pip install --user cpp-coveralls
