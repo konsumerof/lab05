@@ -14,6 +14,7 @@ jobs:
       cmake -B ./output
       cd output
       make
+      cd ..
  tests:
     runs-on: ubuntu-latest
     steps:
