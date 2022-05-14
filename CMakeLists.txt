@@ -1,21 +1,24 @@
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 3.1)
 
-set(CMAKE_CXX_STANDART 11)
-set(CMAKE_CXX_STANDART _REQUIRED ON)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_FLAGS "-fprofile-arcs -ftest-coverage")
 
-project(lab05)
+project(banking)
 
-include_directories(banking)
-add_subdirectory(banking banking)
+set(LIBS banking/Transaction.cpp banking/Account.cpp)
 
-option(BUILD_TESTS "Build tests" ON)
-option(COVERAGE "Coverage" ON)
+add_library(${PROJECT_NAME} ${LIBS})
+
+include_directories(${PROJECT_NAME} include)
+
+option(BUILD_TESTS "Builds tests" ON)
 
 if(BUILD_TESTS)
- enable_testing()
- add_executable(check tests/tests.cpp)
- add_subdirectory(third-party/gtest)
- target_compile_options(check PRIVATE --coverage)
- target_link_libraries(check banking gtest_main gmock_main --coverage)
- add_test(NAME check COMMAND check)
- endif()
+  enable_testing()
+  add_subdirectory(third-party/gtest)
+  add_executable(tests tests/test.cpp)
+  target_link_libraries(tests ${PROJECT_NAME} gtest_main)
+  add_test(NAME unit_test COMMAND tests)
+endif()
