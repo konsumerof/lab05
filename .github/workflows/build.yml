@@ -14,6 +14,7 @@ jobs:
       cmake -B ./output
       cd output
       make
+      ./tests
  tests:
     runs-on: ubuntu-latest
     steps:
@@ -30,9 +31,10 @@ jobs:
           sudo apt-get install -y lcov
       - name: run lcov
         run: | 
-          lcov --capture --directory .. --output-file lcov.info
+          lcov --capture --directory output/CMakeFiles/banking.dir/banking --output-file ./lcov.info
+          lcov --remove ./lcov.info '/home/runner/work/tp-lab05/tp-lab05/third-party/gtest/*' -o ./lcov_filtered.info
       - name: coveralls
         uses: coverallsapp/github-action@v1.1.2
         with:
-          path-to-lcov: "./lcov.info"
+          path-to-lcov: "./lcov_filtered.info"
           github-token: ${{ secrets.github_token }}
